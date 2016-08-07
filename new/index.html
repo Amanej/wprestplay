@@ -1,0 +1,106 @@
+<html>
+<head>
+
+
+
+
+
+</head>
+
+<body>
+
+<input type="text" id="myurl" /> <button id="getPost">Get Posts</button> <button id="getProducts">Get Products</button><button id="getIndex">Get Index</button>
+<div id="response"></div>
+
+</body>
+<script>
+
+var getIndex = document.getElementById('getIndex');
+var getProducts = document.getElementById('getProducts');
+var getPost = document.getElementById('getPost');
+var res = document.getElementById('response');
+
+function loadit(url) {
+  console.log(url);
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if(xhttp.readyState == 4 && xhttp.status == 200) {
+      //console.log(xhttp.responseText);
+      var response = xhttp.responseText;
+      _parsed = JSON.parse(response);
+      //console.log(_parsed);
+      _parsed.forEach(function(content) {
+        //console.log(content);
+        res.innerHTML += (
+          "<ul><li>"
+          +"<strong>id: "+content.id+"</strong>"
+          +"<br/>content: "+content.content.rendered
+          +"<i> date: "+content.date+"</i>"
+          +"<br/><br/><a href='"+content.link+"'>"+"Visit post: "+content.slug+"</a>"
+          +"<br/><br/><br/>"
+        );
+      });
+    }
+  };
+  xhttp.open("GET", url, true);
+  xhttp.send();
+  console.log("req sent");
+}
+
+function loadindex(url) {
+  console.log(url);
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if(xhttp.readyState == 4 && xhttp.status == 200) {
+      //console.log(xhttp.responseText);
+      var response = xhttp.responseText;
+      _parsed = JSON.parse(response);
+      console.log(_parsed);
+      /*_parsed.forEach(function(content) {
+        //console.log(content);
+        res.innerHTML += (
+          "<ul><li>"
+          +"<strong>id: "+content.id+"</strong>"
+          +"<br/>content: "+content.content.rendered
+          +"<i> date: "+content.date+"</i>"
+          +"<br/><br/><a href='"+content.link+"'>"+"Visit post: "+content.slug+"</a>"
+          +"<br/><br/><br/>"
+        );
+      });*/
+    }
+  };
+  xhttp.open("GET", url, true);
+  xhttp.send();
+  console.log("req sent");
+}
+// http://www.mrbazaari.com/testwpapi/
+//var url  = document.getElementById("myurl").value;
+
+var getUrl = function() {
+  var url  = document.getElementById("myurl").value;
+  return url
+}
+
+getPost.addEventListener("click", function() {
+  _url = getUrl();
+  console.log(_url);
+  _url += "wp-json/wp/v2/posts";
+  loadit(_url);
+});
+
+getProducts.addEventListener("click", function() {
+  _url = getUrl();
+  console.log(_url);
+  _url += "wp-json/wc/v1/products";
+  loadindex(_url);
+});
+
+getIndex.addEventListener("click", function() {
+  _url = getUrl();
+  console.log(_url);
+  _url += "wp-json/wc/v1";
+  loadindex(_url);
+});
+
+</script>
+</html>
