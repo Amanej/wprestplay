@@ -1,9 +1,10 @@
+var settings = require('settings.json');
 var WooCommerceAPI = require('woocommerce-api');
 
 var WooCommerce = new WooCommerceAPI({
   url: 'http://www.mrbazaari.com/testwpapi',
-  consumerKey: 'ck_846e0b97cb4ccec71e17312316f9348b03d2b784',
-  consumerSecret: 'cs_7ad6ee177a7b015bbd18a8ba9ad887e72e1e7036',
+  consumerKey: settings.consumerKey,
+  consumerSecret: settings.consumerSecret,
   wpAPI: true,
   version: 'wc/v1'
 });
@@ -24,3 +25,29 @@ WooCommerce.get('products', function(err, data, res) {
     console.dir(_p);
   }
 });
+
+// Create product
+var data = {
+  name: "3D-printed product",
+  type: "simple",
+  regular_price: "21.99",
+  description: "This is awesome product!",
+  short_description: "This is awesome product!",
+  categories: [
+    {
+      id: 1
+    }
+  ],
+  images: [
+    {
+      src: "https://upslgp.s3.amazonaws.com/areynolds15/VoronoiSpiralCenterpiece/Vase/images/Vase.jpg",
+      position: 0
+    }
+  ]
+};
+
+var createProduct = function(data) {
+  WooCommerce.post('products', data, function(err,data,res) {
+    console.log(res);
+  });
+};

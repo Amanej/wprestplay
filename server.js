@@ -1,5 +1,5 @@
 'use strict';
-
+var settings = require('settings.json');
 const express = require('express');
 const path = require('path');
 
@@ -10,8 +10,8 @@ var WooCommerceAPI = require('woocommerce-api');
 
 var WooCommerce = new WooCommerceAPI({
   url: 'http://www.mrbazaari.com/testwpapi',
-  consumerKey: 'ck_846e0b97cb4ccec71e17312316f9348b03d2b784',
-  consumerSecret: 'cs_7ad6ee177a7b015bbd18a8ba9ad887e72e1e7036',
+  consumerKey: settings.consumerKey,
+  consumerSecret: settings.consumerSecret,
   wpAPI: true,
   version: 'wc/v1'
 });

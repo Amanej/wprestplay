@@ -1,5 +1,5 @@
 var WP = require( 'wordpress-rest-api' );
-var wp = new WP({ endpoint: 'http://www.mrbazaari.com/testwpapi/wp-json/' });
+var wp = new WP({ endpoint: settings.website });
 
 // get posts
 wp.posts().get(function( err, data ) {
